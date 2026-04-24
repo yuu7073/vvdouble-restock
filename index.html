@@ -17,6 +17,8 @@
     --accent-soft: #f4e4df;
     --ok: #3d7a5a;
     --warn: #d4a24a;
+    --ai: #6b5b95;
+    --ai-soft: #ebe6f2;
     --shadow: 0 1px 3px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.04);
   }
   body {
@@ -40,10 +42,7 @@
     letter-spacing: -0.02em;
     margin-bottom: 6px;
   }
-  header .sub {
-    color: var(--muted);
-    font-size: 14px;
-  }
+  header .sub { color: var(--muted); font-size: 14px; }
   header .tag {
     display: inline-block;
     padding: 2px 8px;
@@ -74,10 +73,7 @@
     position: relative;
     cursor: pointer;
   }
-  .upload-card:hover {
-    border-color: var(--accent);
-    background: #fffaf8;
-  }
+  .upload-card:hover { border-color: var(--accent); background: #fffaf8; }
   .upload-card.filled {
     border-style: solid;
     border-color: var(--ok);
@@ -91,191 +87,182 @@
     letter-spacing: 0.05em;
     margin-bottom: 6px;
   }
-  .upload-card .name {
-    font-size: 15px;
-    font-weight: 600;
-    margin-bottom: 4px;
-  }
-  .upload-card .hint {
-    font-size: 12px;
-    color: var(--muted);
-  }
+  .upload-card .name { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+  .upload-card .hint { font-size: 12px; color: var(--muted); }
   .upload-card .filename {
-    font-size: 13px;
-    color: var(--ok);
-    margin-top: 8px;
-    word-break: break-all;
-    font-weight: 500;
+    font-size: 13px; color: var(--ok); margin-top: 8px;
+    word-break: break-all; font-weight: 500;
   }
   .upload-card input[type="file"] {
-    position: absolute;
-    inset: 0;
-    opacity: 0;
-    cursor: pointer;
+    position: absolute; inset: 0; opacity: 0; cursor: pointer;
   }
 
   .actions {
-    display: flex;
-    gap: 12px;
-    margin-bottom: 32px;
-    align-items: center;
-    flex-wrap: wrap;
+    display: flex; gap: 12px; margin-bottom: 32px;
+    align-items: center; flex-wrap: wrap;
   }
   button {
-    font-family: inherit;
-    font-size: 14px;
-    font-weight: 600;
-    padding: 11px 22px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.15s ease;
+    font-family: inherit; font-size: 14px; font-weight: 600;
+    padding: 11px 22px; border: none; border-radius: 8px;
+    cursor: pointer; transition: all 0.15s ease;
   }
-  button.primary {
-    background: var(--ink);
-    color: #fff;
-  }
-  button.primary:hover:not(:disabled) {
-    background: #000;
-    transform: translateY(-1px);
-  }
-  button.primary:disabled {
-    background: #ccc;
-    cursor: not-allowed;
-  }
-  button.secondary {
-    background: var(--accent);
-    color: #fff;
-  }
-  button.secondary:hover:not(:disabled) {
-    background: #b04431;
-  }
-  button.secondary:disabled {
-    background: #ddd;
-    color: #999;
-    cursor: not-allowed;
-  }
+  button.primary { background: var(--ink); color: #fff; }
+  button.primary:hover:not(:disabled) { background: #000; transform: translateY(-1px); }
+  button.primary:disabled { background: #ccc; cursor: not-allowed; }
+  button.secondary { background: var(--accent); color: #fff; }
+  button.secondary:hover:not(:disabled) { background: #b04431; }
+  button.secondary:disabled { background: #ddd; color: #999; cursor: not-allowed; }
   button.ghost {
-    background: transparent;
-    color: var(--muted);
+    background: transparent; color: var(--muted);
     border: 1px solid var(--line);
   }
   button.ghost:hover { background: var(--line); }
 
   .params {
-    margin-left: auto;
-    display: flex;
-    gap: 16px;
-    font-size: 13px;
-    color: var(--muted);
+    margin-left: auto; display: flex; gap: 16px;
+    font-size: 13px; color: var(--muted);
   }
   .params label { display: flex; align-items: center; gap: 6px; }
   .params input[type="number"] {
-    width: 56px;
-    padding: 4px 8px;
-    border: 1px solid var(--line);
-    border-radius: 4px;
-    font-family: inherit;
-    text-align: center;
+    width: 56px; padding: 4px 8px;
+    border: 1px solid var(--line); border-radius: 4px;
+    font-family: inherit; text-align: center;
   }
 
   #log {
-    background: var(--card);
-    border: 1px solid var(--line);
-    border-radius: 10px;
-    padding: 18px 22px;
-    margin-bottom: 24px;
-    font-size: 14px;
-    display: none;
+    background: var(--card); border: 1px solid var(--line);
+    border-radius: 10px; padding: 18px 22px;
+    margin-bottom: 24px; font-size: 14px; display: none;
   }
   #log.visible { display: block; }
   #log .log-line {
-    padding: 4px 0;
-    border-bottom: 1px dashed var(--line);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    padding: 4px 0; border-bottom: 1px dashed var(--line);
+    display: flex; justify-content: space-between; align-items: center;
   }
   #log .log-line:last-child { border-bottom: none; }
-  #log .log-line .step {
-    color: var(--muted);
-    font-size: 12px;
-  }
+  #log .log-line .step { color: var(--muted); font-size: 12px; }
   #log .log-line .count {
-    font-weight: 600;
-    font-variant-numeric: tabular-nums;
+    font-weight: 600; font-variant-numeric: tabular-nums;
   }
   #log .log-line.highlight .count { color: var(--accent); }
 
-  #result-wrap {
-    background: var(--card);
-    border: 1px solid var(--line);
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: var(--shadow);
+  /* ========== 搜尋區塊 ========== */
+  #search-panel {
+    background: var(--card); border: 1px solid var(--line);
+    border-radius: 10px; padding: 18px 22px;
+    margin-bottom: 16px; display: none;
+  }
+  #search-panel.visible { display: block; }
+
+  .search-row {
+    display: flex; gap: 10px; align-items: center; margin-bottom: 14px;
+  }
+  .search-row .text-input {
+    flex: 1; padding: 10px 14px;
+    border: 1px solid var(--line); border-radius: 8px;
+    font-family: inherit; font-size: 14px;
+    background: var(--bg);
+  }
+  .search-row .text-input:focus {
+    outline: none; border-color: var(--accent); background: #fff;
+  }
+  .search-row button.ai-btn {
+    background: var(--ai); color: #fff;
+    padding: 10px 18px; white-space: nowrap;
+  }
+  .search-row button.ai-btn:hover { background: #58487f; }
+  .search-row button.clear-btn {
+    background: transparent; color: var(--muted);
+    border: 1px solid var(--line); padding: 10px 14px;
+  }
+
+  .tag-section .label {
+    font-size: 12px; color: var(--muted);
+    font-weight: 600; margin-bottom: 8px;
+    text-transform: uppercase; letter-spacing: 0.04em;
+  }
+  .tag-group {
+    display: flex; flex-wrap: wrap; gap: 6px;
+    margin-bottom: 10px;
+  }
+  .tag-group .group-label {
+    font-size: 12px; color: var(--muted);
+    padding: 6px 2px; margin-right: 4px;
+    font-weight: 500;
+  }
+  .tag-btn {
+    padding: 5px 12px;
+    background: #f2efe9; color: var(--ink);
+    border: 1px solid transparent; border-radius: 20px;
+    font-size: 13px; font-weight: 500;
+    cursor: pointer; transition: all 0.12s ease;
+    font-family: inherit;
+  }
+  .tag-btn:hover { background: #e8e3db; }
+  .tag-btn.active {
+    background: var(--ink); color: #fff;
+  }
+  .tag-btn.ai-active {
+    background: var(--ai); color: #fff;
+  }
+
+  .active-filters {
+    margin-top: 10px; padding-top: 10px;
+    border-top: 1px dashed var(--line);
+    font-size: 13px; color: var(--muted);
     display: none;
+  }
+  .active-filters.visible { display: block; }
+  .active-filters .chip {
+    display: inline-flex; align-items: center; gap: 4px;
+    background: var(--accent-soft); color: var(--accent);
+    padding: 3px 10px; border-radius: 12px;
+    font-size: 12px; font-weight: 600; margin-right: 6px;
+  }
+  .active-filters .chip.ai-chip {
+    background: var(--ai-soft); color: var(--ai);
+  }
+  .active-filters .chip .x {
+    cursor: pointer; font-weight: 700; margin-left: 2px;
+  }
+
+  /* ========== 結果區塊 ========== */
+  #result-wrap {
+    background: var(--card); border: 1px solid var(--line);
+    border-radius: 10px; overflow: hidden;
+    box-shadow: var(--shadow); display: none;
   }
   #result-wrap.visible { display: block; }
 
   .result-header {
     padding: 18px 22px;
     border-bottom: 1px solid var(--line);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 16px;
+    display: flex; align-items: center;
+    justify-content: space-between; gap: 16px;
     flex-wrap: wrap;
   }
-  .result-header h2 {
-    font-size: 18px;
-    font-weight: 700;
-  }
-  .result-header .total {
-    color: var(--accent);
-    font-weight: 800;
-  }
-  .search-box {
-    flex: 1;
-    max-width: 280px;
-    min-width: 180px;
-  }
-  .search-box input {
-    width: 100%;
-    padding: 8px 12px;
-    border: 1px solid var(--line);
-    border-radius: 6px;
-    font-family: inherit;
-    font-size: 13px;
-    background: var(--bg);
+  .result-header h2 { font-size: 18px; font-weight: 700; }
+  .result-header .total { color: var(--accent); font-weight: 800; }
+  .result-header .filtered-note {
+    font-size: 12px; color: var(--muted);
+    margin-left: 8px; font-weight: 400;
   }
 
-  .table-wrap {
-    max-height: 600px;
-    overflow: auto;
-  }
+  .table-wrap { max-height: 600px; overflow: auto; }
   table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 13px;
+    width: 100%; border-collapse: collapse; font-size: 13px;
   }
   thead {
-    background: #f5f2ed;
-    position: sticky;
-    top: 0;
-    z-index: 1;
+    background: #f5f2ed; position: sticky; top: 0; z-index: 1;
   }
   th, td {
-    padding: 10px 14px;
-    text-align: left;
+    padding: 10px 14px; text-align: left;
     border-bottom: 1px solid var(--line);
   }
   th {
-    font-weight: 700;
-    color: var(--muted);
-    font-size: 12px;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    white-space: nowrap;
+    font-weight: 700; color: var(--muted);
+    font-size: 12px; letter-spacing: 0.04em;
+    text-transform: uppercase; white-space: nowrap;
   }
   td.num {
     text-align: right;
@@ -285,28 +272,93 @@
   td.num.zero { color: var(--accent); }
   td.code {
     font-family: "SF Mono", Monaco, Consolas, monospace;
-    font-size: 12px;
-    color: var(--muted);
+    font-size: 12px; color: var(--muted);
   }
   tbody tr:hover { background: #fafaf7; }
-
   .empty {
-    padding: 60px 20px;
-    text-align: center;
-    color: var(--muted);
+    padding: 60px 20px; text-align: center; color: var(--muted);
   }
 
   .error-box {
-    background: #fef2f0;
-    border: 1px solid #e5b0a6;
-    color: #933;
-    padding: 14px 18px;
-    border-radius: 8px;
-    margin-bottom: 20px;
-    font-size: 14px;
-    display: none;
+    background: #fef2f0; border: 1px solid #e5b0a6;
+    color: #933; padding: 14px 18px;
+    border-radius: 8px; margin-bottom: 20px;
+    font-size: 14px; display: none;
   }
   .error-box.visible { display: block; }
+
+  /* ========== AI 彈窗 ========== */
+  .modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.5);
+    display: none; align-items: center;
+    justify-content: center; z-index: 100;
+    padding: 20px;
+  }
+  .modal-overlay.visible { display: flex; }
+  .modal-box {
+    background: #fff; border-radius: 12px;
+    padding: 28px; width: 100%; max-width: 500px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+  }
+  .modal-box h3 {
+    font-size: 18px; font-weight: 700; margin-bottom: 4px;
+  }
+  .modal-box .desc {
+    color: var(--muted); font-size: 13px; margin-bottom: 20px;
+  }
+  .modal-box textarea {
+    width: 100%; min-height: 80px;
+    padding: 12px 14px;
+    border: 1px solid var(--line); border-radius: 8px;
+    font-family: inherit; font-size: 14px;
+    resize: vertical; background: var(--bg);
+  }
+  .modal-box textarea:focus {
+    outline: none; border-color: var(--ai); background: #fff;
+  }
+  .modal-box .examples {
+    margin-top: 10px; font-size: 12px; color: var(--muted);
+  }
+  .modal-box .examples .ex {
+    display: inline-block; padding: 3px 10px;
+    background: var(--ai-soft); color: var(--ai);
+    border-radius: 12px; margin-right: 6px;
+    margin-bottom: 4px; cursor: pointer;
+    font-weight: 500;
+  }
+  .modal-box .examples .ex:hover { background: #ddd0eb; }
+  .modal-actions {
+    display: flex; gap: 10px;
+    justify-content: flex-end; margin-top: 20px;
+  }
+  .modal-actions button.go { background: var(--ai); color: #fff; }
+  .modal-actions button.go:hover:not(:disabled) { background: #58487f; }
+  .modal-actions button.go:disabled {
+    background: #ccc; cursor: not-allowed;
+  }
+  .modal-actions button.cancel {
+    background: transparent; color: var(--muted);
+    border: 1px solid var(--line);
+  }
+
+  /* AI loading */
+  .ai-status {
+    display: none; align-items: center; gap: 8px;
+    padding: 10px 14px; background: var(--ai-soft);
+    color: var(--ai); border-radius: 8px;
+    font-size: 13px; margin-top: 12px;
+  }
+  .ai-status.visible { display: flex; }
+  .ai-status .spinner {
+    width: 14px; height: 14px;
+    border: 2px solid #d6ccea;
+    border-top-color: var(--ai);
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
 </style>
 </head>
 <body>
@@ -320,26 +372,24 @@
   <div class="error-box" id="errorBox"></div>
 
   <div class="upload-grid">
-    <label class="upload-card" id="card-web">
+    <label class="upload-card">
       <div class="label">Step 1</div>
       <div class="name">官網庫存</div>
-      <div class="hint">ERP 總倉庫存表 (.xlsx)</div>
+      <div class="hint">ERP 總倉庫存表</div>
       <div class="filename"></div>
       <input type="file" accept=".xlsx,.xls" data-role="web">
     </label>
-
-    <label class="upload-card" id="card-sl">
+    <label class="upload-card">
       <div class="label">Step 2</div>
       <div class="name">SL 已下架品項</div>
-      <div class="hint">官網已下架總表 (.xls / .xlsx)</div>
+      <div class="hint">官網已下架總表</div>
       <div class="filename"></div>
       <input type="file" accept=".xlsx,.xls" data-role="sl">
     </label>
-
-    <label class="upload-card" id="card-cx">
+    <label class="upload-card">
       <div class="label">Step 3</div>
       <div class="name">忠孝庫存</div>
-      <div class="hint">ERP 門市庫存表 (.xlsx)</div>
+      <div class="hint">ERP 門市庫存表</div>
       <div class="filename"></div>
       <input type="file" accept=".xlsx,.xls" data-role="cx">
     </label>
@@ -357,12 +407,80 @@
 
   <div id="log"></div>
 
+  <!-- 搜尋面板 -->
+  <div id="search-panel">
+    <div class="search-row">
+      <input type="text" class="text-input" id="searchInput"
+             placeholder="🔍 搜尋品號 / 品名 / 顏色 / 尺寸... (即時篩選)">
+      <button class="ai-btn" id="aiBtn">🤖 AI 模糊搜尋</button>
+      <button class="clear-btn" id="clearBtn">清除全部</button>
+    </div>
+
+    <div class="tag-section">
+      <div class="label">快速標籤 (可多選 · 交集)</div>
+
+      <div class="tag-group">
+        <span class="group-label">品類:</span>
+        <button class="tag-btn" data-tag="上衣">上衣</button>
+        <button class="tag-btn" data-tag="背心">背心</button>
+        <button class="tag-btn" data-tag="襯衫">襯衫</button>
+        <button class="tag-btn" data-tag="T-shirt|T恤|短袖">T-shirt</button>
+        <button class="tag-btn" data-tag="大學T">大學T</button>
+        <button class="tag-btn" data-tag="針織">針織</button>
+        <button class="tag-btn" data-tag="洋裝">洋裝</button>
+        <button class="tag-btn" data-tag="長裙">長裙</button>
+        <button class="tag-btn" data-tag="短裙">短裙</button>
+        <button class="tag-btn" data-tag="長褲">長褲</button>
+        <button class="tag-btn" data-tag="短褲">短褲</button>
+        <button class="tag-btn" data-tag="寬褲">寬褲</button>
+        <button class="tag-btn" data-tag="外套">外套</button>
+        <button class="tag-btn" data-tag="BRA|內著">內著/BRA</button>
+      </div>
+
+      <div class="tag-group">
+        <span class="group-label">材質:</span>
+        <button class="tag-btn" data-tag="蕾絲">蕾絲</button>
+        <button class="tag-btn" data-tag="雪紡">雪紡</button>
+        <button class="tag-btn" data-tag="牛仔|丹寧">牛仔/丹寧</button>
+        <button class="tag-btn" data-tag="棉">棉</button>
+        <button class="tag-btn" data-tag="麻">麻</button>
+        <button class="tag-btn" data-tag="緞面">緞面</button>
+      </div>
+
+      <div class="tag-group">
+        <span class="group-label">設計:</span>
+        <button class="tag-btn" data-tag="印花">印花</button>
+        <button class="tag-btn" data-tag="刺繡">刺繡</button>
+        <button class="tag-btn" data-tag="格紋">格紋</button>
+        <button class="tag-btn" data-tag="拼接">拼接</button>
+        <button class="tag-btn" data-tag="聯名">聯名</button>
+      </div>
+
+      <div class="tag-group">
+        <span class="group-label">尺寸:</span>
+        <button class="tag-btn" data-tag=" F$| F " data-scope="size">F</button>
+        <button class="tag-btn" data-tag=" ML$| ML " data-scope="size">ML</button>
+        <button class="tag-btn" data-tag=" 2L$| 2L |XL2L" data-scope="size">2L</button>
+        <button class="tag-btn" data-tag=" 3L4L$| 3L4L |3L$|4L$" data-scope="size">3L/4L</button>
+        <button class="tag-btn" data-tag=" 5L6L$|5L$|6L$" data-scope="size">5L/6L</button>
+      </div>
+    </div>
+
+    <div class="active-filters" id="activeFilters"></div>
+
+    <div class="ai-status" id="aiStatus">
+      <div class="spinner"></div>
+      <span id="aiStatusText">AI 思考中...</span>
+    </div>
+  </div>
+
+  <!-- 結果區 -->
   <div id="result-wrap">
     <div class="result-header">
-      <h2>可調撥清單 · 共 <span class="total" id="totalCount">0</span> 筆</h2>
-      <div class="search-box">
-        <input type="text" id="searchInput" placeholder="搜尋品號 / 品名 / 顏色...">
-      </div>
+      <h2>
+        可調撥清單 · 共 <span class="total" id="totalCount">0</span> 筆
+        <span class="filtered-note" id="filteredNote"></span>
+      </h2>
     </div>
     <div class="table-wrap">
       <table id="resultTable">
@@ -380,19 +498,39 @@
       </table>
     </div>
   </div>
+</div>
 
+<!-- AI 彈窗 -->
+<div class="modal-overlay" id="aiModal">
+  <div class="modal-box">
+    <h3>🤖 AI 模糊搜尋</h3>
+    <div class="desc">用自然語言描述想補的品項,AI 會從清單中挑出最符合的。</div>
+    <textarea id="aiQuery" placeholder="例如:想補夏天涼感的上衣、適合肉肉女孩的長裙、秋冬保暖的針織類..."></textarea>
+    <div class="examples">
+      範例:
+      <span class="ex" data-q="夏天涼感的上衣">夏天涼感的上衣</span>
+      <span class="ex" data-q="適合約會穿的洋裝">適合約會穿的洋裝</span>
+      <span class="ex" data-q="秋冬保暖針織">秋冬保暖針織</span>
+      <span class="ex" data-q="顯瘦穿搭的長褲">顯瘦穿搭的長褲</span>
+    </div>
+    <div class="modal-actions">
+      <button class="cancel" id="aiCancelBtn">取消</button>
+      <button class="go" id="aiGoBtn">開始搜尋</button>
+    </div>
+  </div>
 </div>
 
 <script>
 // ========== 狀態管理 ==========
 const state = {
-  web: null,   // 官網庫存
-  sl: null,    // SL 已下架
-  cx: null,    // 忠孝庫存
-  result: []   // 最終清單
+  web: null, sl: null, cx: null,
+  result: [],             // 完整補貨清單
+  filtered: [],           // 當前過濾後的清單
+  activeTags: new Set(),  // 啟用的標籤 (交集)
+  aiFilter: null          // AI 篩選的品號 Set (null = 無AI篩選)
 };
 
-// ========== 檔案上傳處理 ==========
+// ========== 檔案上傳 ==========
 document.querySelectorAll('input[type="file"]').forEach(input => {
   input.addEventListener('change', async (e) => {
     const file = e.target.files[0];
@@ -400,7 +538,6 @@ document.querySelectorAll('input[type="file"]').forEach(input => {
     const role = e.target.dataset.role;
     const card = e.target.closest('.upload-card');
     const filenameEl = card.querySelector('.filename');
-
     try {
       const data = await readExcelFile(file);
       state[role] = data;
@@ -425,9 +562,7 @@ function readExcelFile(file) {
         const sheet = wb.Sheets[wb.SheetNames[0]];
         const json = XLSX.utils.sheet_to_json(sheet, { defval: '' });
         resolve(json);
-      } catch (err) {
-        reject(err);
-      }
+      } catch (err) { reject(err); }
     };
     reader.onerror = () => reject(new Error('FileReader 錯誤'));
     reader.readAsArrayBuffer(file);
@@ -439,49 +574,37 @@ function checkReady() {
   document.getElementById('analyzeBtn').disabled = !ready;
 }
 
-// ========== 核心邏輯 ==========
+// ========== 核心分析 ==========
 function analyze() {
   clearError();
   const webMin = parseInt(document.getElementById('webMin').value) || 5;
   const cxMax = parseInt(document.getElementById('cxMax').value) || 2;
-
   try {
-    // --- 找欄位(容錯:欄位名稱可能有多個空白) ---
     const webCols = detectCols(state.web[0], {
-      code: ['品號', '品 號', '品    號'],
-      name: ['品名', '品 名', '品    名'],
-      stockIn: ['進貨數量'],
-      balance: ['庫存結餘']
+      code: ['品號'], name: ['品名'],
+      stockIn: ['進貨數量'], balance: ['庫存結餘']
     });
-    const slCols = detectCols(state.sl[0], {
-      code: ['商品貨號']
-    });
+    const slCols = detectCols(state.sl[0], { code: ['商品貨號'] });
     const cxCols = detectCols(state.cx[0], {
-      code: ['品號', '品 號', '品    號'],
-      name: ['品名', '品 名', '品    名'],
-      transferIn: ['轉撥入庫'],
-      balance: ['庫存結餘']
+      code: ['品號'], name: ['品名'],
+      transferIn: ['轉撥入庫'], balance: ['庫存結餘']
     });
 
-    // --- Step 1: 官網庫存過濾 ---
+    // Step 1
     const webFiltered = state.web.filter(row => {
-      const stockIn = toNum(row[webCols.stockIn]);
-      const balance = toNum(row[webCols.balance]);
-      return stockIn === 0 && balance >= webMin;
+      return toNum(row[webCols.stockIn]) === 0 &&
+             toNum(row[webCols.balance]) >= webMin;
     });
 
-    // --- Step 2: 排除 SL 已下架 ---
+    // Step 2
     const slCodes = new Set(
-      state.sl
-        .map(r => String(r[slCols.code] || '').trim())
-        .filter(c => c)
+      state.sl.map(r => String(r[slCols.code] || '').trim()).filter(c => c)
     );
-    const webAfterSL = webFiltered.filter(row => {
-      const code = String(row[webCols.code] || '').trim();
-      return !slCodes.has(code);
-    });
+    const webAfterSL = webFiltered.filter(row =>
+      !slCodes.has(String(row[webCols.code] || '').trim())
+    );
 
-    // --- Step 3: 忠孝實際庫存 map ---
+    // Step 3: 忠孝庫存 map
     const cxStockMap = new Map();
     state.cx.forEach(row => {
       const code = String(row[cxCols.code] || '').trim();
@@ -489,32 +612,27 @@ function analyze() {
       if (code) cxStockMap.set(code, actual);
     });
 
-    // --- Step 4: 判斷需補貨 ---
+    // Step 4
     const restockList = webAfterSL.filter(row => {
       const code = String(row[webCols.code] || '').trim();
       const cxStock = cxStockMap.has(code) ? cxStockMap.get(code) : 0;
       return cxStock < cxMax;
     });
 
-    // --- 拆解品名 ---
     state.result = restockList.map(row => {
       const code = String(row[webCols.code] || '').trim();
       const fullName = String(row[webCols.name] || '').trim();
       const { name, color, size } = splitName(fullName);
       return {
-        code,
-        name,
-        color,
-        size,
+        code, name, color, size,
+        fullName,
         webStock: toNum(row[webCols.balance]),
         cxStock: cxStockMap.has(code) ? cxStockMap.get(code) : 0
       };
     });
 
-    // 排序:忠孝 0 件的優先、再依官網庫存由多到少
     state.result.sort((a, b) => a.cxStock - b.cxStock || b.webStock - a.webStock);
 
-    // --- 顯示 log ---
     renderLog([
       { step: 'Step 1', desc: '官網庫存可出(進貨=0 且 庫存≥' + webMin + ')', count: webFiltered.length },
       { step: 'Step 2', desc: '排除 SL 已下架', count: webAfterSL.length, sub: '-' + (webFiltered.length - webAfterSL.length) },
@@ -522,9 +640,18 @@ function analyze() {
       { step: 'Step 4', desc: '最終可調撥清單', count: state.result.length, highlight: true }
     ]);
 
-    renderTable(state.result);
-    document.getElementById('downloadBtn').disabled = state.result.length === 0;
+    // 重置篩選狀態
+    state.activeTags.clear();
+    state.aiFilter = null;
+    document.getElementById('searchInput').value = '';
+    document.querySelectorAll('.tag-btn').forEach(b => {
+      b.classList.remove('active', 'ai-active');
+    });
+
+    applyFilters();
+    document.getElementById('search-panel').classList.add('visible');
     document.getElementById('result-wrap').classList.add('visible');
+    document.getElementById('downloadBtn').disabled = state.result.length === 0;
 
   } catch (err) {
     showError('分析失敗:' + err.message);
@@ -541,9 +668,7 @@ function detectCols(sampleRow, spec) {
       const normalized = k.replace(/\s+/g, '');
       return candidates.some(c => normalized === c.replace(/\s+/g, ''));
     });
-    if (!found) {
-      throw new Error('找不到欄位:' + candidates[0] + ' (可能是檔案格式不對)');
-    }
+    if (!found) throw new Error('找不到欄位:' + candidates[0]);
     result[role] = found;
   }
   return result;
@@ -565,13 +690,92 @@ function splitName(full) {
       size: parts[parts.length - 1]
     };
   }
-  if (parts.length === 2) {
-    return { name: parts[0], color: parts[1], size: '' };
-  }
+  if (parts.length === 2) return { name: parts[0], color: parts[1], size: '' };
   return { name: full, color: '', size: '' };
 }
 
-// ========== UI 渲染 ==========
+// ========== 過濾邏輯(核心:文字 + 標籤 + AI 交集)==========
+function applyFilters() {
+  const searchQ = document.getElementById('searchInput').value.trim().toLowerCase();
+  let list = state.result;
+
+  // 1. AI 篩選(品號集合)
+  if (state.aiFilter) {
+    list = list.filter(r => state.aiFilter.has(r.code));
+  }
+
+  // 2. 文字搜尋
+  if (searchQ) {
+    list = list.filter(r =>
+      r.code.toLowerCase().includes(searchQ) ||
+      r.fullName.toLowerCase().includes(searchQ) ||
+      r.color.toLowerCase().includes(searchQ) ||
+      r.size.toLowerCase().includes(searchQ)
+    );
+  }
+
+  // 3. 標籤交集(每個標籤都要符合)
+  for (const tagPattern of state.activeTags) {
+    const regex = new RegExp(tagPattern);
+    list = list.filter(r => regex.test(r.fullName));
+  }
+
+  state.filtered = list;
+  renderActiveFilters();
+  renderTable(list);
+}
+
+function renderTable(list) {
+  const body = document.getElementById('resultBody');
+  document.getElementById('totalCount').textContent = list.length;
+
+  const hasFilter = state.activeTags.size > 0 || state.aiFilter ||
+                    document.getElementById('searchInput').value.trim();
+  document.getElementById('filteredNote').textContent =
+    hasFilter ? '(從 ' + state.result.length + ' 筆過濾)' : '';
+
+  if (list.length === 0) {
+    body.innerHTML = '<tr><td colspan="6" class="empty">沒有符合條件的品項</td></tr>';
+    return;
+  }
+  body.innerHTML = list.map(r => `
+    <tr>
+      <td class="code">${escapeHtml(r.code)}</td>
+      <td>${escapeHtml(r.name)}</td>
+      <td>${escapeHtml(r.color)}</td>
+      <td>${escapeHtml(r.size)}</td>
+      <td class="num">${r.webStock}</td>
+      <td class="num ${r.cxStock === 0 ? 'zero' : ''}">${r.cxStock}</td>
+    </tr>
+  `).join('');
+}
+
+function renderActiveFilters() {
+  const container = document.getElementById('activeFilters');
+  const chips = [];
+  state.activeTags.forEach(t => {
+    // 還原可讀的標籤名
+    const btn = document.querySelector(`.tag-btn[data-tag="${t}"]`);
+    const label = btn ? btn.textContent : t;
+    chips.push(`<span class="chip">🏷️ ${escapeHtml(label)} <span class="x" data-clear-tag="${t}">✕</span></span>`);
+  });
+  if (state.aiFilter) {
+    chips.push(`<span class="chip ai-chip">🤖 AI: ${escapeHtml(state.aiFilter.label || 'AI 搜尋')} <span class="x" data-clear-ai="1">✕</span></span>`);
+  }
+  if (chips.length > 0) {
+    container.innerHTML = '當前篩選: ' + chips.join('');
+    container.classList.add('visible');
+  } else {
+    container.classList.remove('visible');
+  }
+}
+
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, c => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+  }[c]));
+}
+
 function renderLog(items) {
   const logEl = document.getElementById('log');
   logEl.innerHTML = items.map(it => `
@@ -586,106 +790,265 @@ function renderLog(items) {
   logEl.classList.add('visible');
 }
 
-function renderTable(list) {
-  const body = document.getElementById('resultBody');
-  document.getElementById('totalCount').textContent = list.length;
+// ========== 事件綁定 ==========
+// 文字搜尋
+document.getElementById('searchInput').addEventListener('input', applyFilters);
 
-  if (list.length === 0) {
-    body.innerHTML = '<tr><td colspan="6" class="empty">沒有符合條件的品項</td></tr>';
-    return;
-  }
-
-  body.innerHTML = list.map(r => `
-    <tr>
-      <td class="code">${escapeHtml(r.code)}</td>
-      <td>${escapeHtml(r.name)}</td>
-      <td>${escapeHtml(r.color)}</td>
-      <td>${escapeHtml(r.size)}</td>
-      <td class="num">${r.webStock}</td>
-      <td class="num ${r.cxStock === 0 ? 'zero' : ''}">${r.cxStock}</td>
-    </tr>
-  `).join('');
-}
-
-function escapeHtml(s) {
-  return String(s).replace(/[&<>"']/g, c => ({
-    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
-  }[c]));
-}
-
-// ========== 搜尋 ==========
-document.getElementById('searchInput').addEventListener('input', (e) => {
-  const q = e.target.value.trim().toLowerCase();
-  if (!q) {
-    renderTable(state.result);
-    return;
-  }
-  const filtered = state.result.filter(r =>
-    r.code.toLowerCase().includes(q) ||
-    r.name.toLowerCase().includes(q) ||
-    r.color.toLowerCase().includes(q) ||
-    r.size.toLowerCase().includes(q)
-  );
-  renderTable(filtered);
+// 標籤點擊
+document.querySelectorAll('.tag-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const tag = btn.dataset.tag;
+    if (state.activeTags.has(tag)) {
+      state.activeTags.delete(tag);
+      btn.classList.remove('active');
+    } else {
+      state.activeTags.add(tag);
+      btn.classList.add('active');
+    }
+    applyFilters();
+  });
 });
+
+// 清除標籤 chip
+document.getElementById('activeFilters').addEventListener('click', (e) => {
+  const clearTag = e.target.dataset.clearTag;
+  const clearAi = e.target.dataset.clearAi;
+  if (clearTag) {
+    state.activeTags.delete(clearTag);
+    const btn = document.querySelector(`.tag-btn[data-tag="${clearTag}"]`);
+    if (btn) btn.classList.remove('active');
+    applyFilters();
+  }
+  if (clearAi) {
+    state.aiFilter = null;
+    applyFilters();
+  }
+});
+
+// 清除全部
+document.getElementById('clearBtn').addEventListener('click', () => {
+  state.activeTags.clear();
+  state.aiFilter = null;
+  document.getElementById('searchInput').value = '';
+  document.querySelectorAll('.tag-btn').forEach(b =>
+    b.classList.remove('active', 'ai-active')
+  );
+  applyFilters();
+});
+
+// ========== AI 搜尋 ==========
+document.getElementById('aiBtn').addEventListener('click', () => {
+  document.getElementById('aiModal').classList.add('visible');
+  document.getElementById('aiQuery').focus();
+});
+document.getElementById('aiCancelBtn').addEventListener('click', () => {
+  document.getElementById('aiModal').classList.remove('visible');
+});
+document.querySelectorAll('.modal-box .ex').forEach(ex => {
+  ex.addEventListener('click', () => {
+    document.getElementById('aiQuery').value = ex.dataset.q;
+  });
+});
+
+document.getElementById('aiGoBtn').addEventListener('click', runAISearch);
+
+async function runAISearch() {
+  const query = document.getElementById('aiQuery').value.trim();
+  if (!query) return;
+
+  // 取得 API Key (沿用 VV 工具習慣)
+  let apiKey = sessionStorage.getItem('anthropic_api_key');
+  if (!apiKey) {
+    apiKey = prompt('請輸入 Anthropic API Key (只在本次瀏覽分頁記住):');
+    if (!apiKey) return;
+    sessionStorage.setItem('anthropic_api_key', apiKey);
+  }
+
+  const goBtn = document.getElementById('aiGoBtn');
+  const status = document.getElementById('aiStatus');
+  const statusText = document.getElementById('aiStatusText');
+  goBtn.disabled = true;
+
+  // 關閉彈窗,顯示 loading 狀態
+  document.getElementById('aiModal').classList.remove('visible');
+  status.classList.add('visible');
+
+  try {
+    // 策略判斷:簡單品類詞(2-5字)→ 關鍵字擴充 ; 複雜需求 → 完整掃品名
+    const isSimple = query.length <= 6 && !/[的穿搭適合想要很常]/.test(query);
+
+    let matchedCodes;
+    if (isSimple) {
+      statusText.textContent = 'AI 正在擴充同義詞...';
+      matchedCodes = await aiKeywordExpand(query, apiKey);
+    } else {
+      statusText.textContent = 'AI 正在掃描 ' + state.result.length + ' 筆品項...';
+      matchedCodes = await aiFullScan(query, apiKey);
+    }
+
+    if (matchedCodes.size === 0) {
+      showError('AI 沒有找到符合「' + query + '」的品項');
+      state.aiFilter = null;
+    } else {
+      state.aiFilter = matchedCodes;
+      state.aiFilter.label = query;
+    }
+    applyFilters();
+  } catch (err) {
+    showError('AI 搜尋失敗:' + err.message);
+    console.error(err);
+  } finally {
+    goBtn.disabled = false;
+    status.classList.remove('visible');
+    document.getElementById('aiQuery').value = '';
+  }
+}
+
+// 策略 B:關鍵字擴充 (快速便宜)
+async function aiKeywordExpand(query, apiKey) {
+  const prompt = `你是 VV DOUBLE 女裝品牌的搜尋助理。使用者要搜尋「${query}」,請列出所有相關的同義詞、關聯詞、英文說法。
+
+規則:
+- 只回傳關鍵字,逗號分隔,不要解釋
+- 包含同義詞、英文說法、類別名稱
+- 例如輸入「牛仔褲」→ 牛仔,丹寧,denim,單寧,牛仔褲
+- 例如輸入「短袖」→ 短袖,T-shirt,T恤,短T
+
+使用者搜尋:${query}`;
+
+  const response = await callClaude(apiKey, prompt, 200);
+  const keywords = response.split(/[,,、\n]/).map(k => k.trim()).filter(k => k);
+
+  // 本地文字比對
+  const matched = new Set();
+  state.result.forEach(r => {
+    if (keywords.some(kw => r.fullName.includes(kw))) {
+      matched.add(r.code);
+    }
+  });
+  return matched;
+}
+
+// 策略 A:完整掃描 (準但較慢)
+async function aiFullScan(query, apiKey) {
+  // 把品名列表編號後丟給 Claude
+  const nameList = state.result.map((r, i) => `${i}:${r.fullName}`).join('\n');
+
+  const prompt = `你是 VV DOUBLE 女裝品牌的搜尋助理。以下是目前需要補貨的品項清單,每行格式是「編號:品名」。
+
+使用者需求:「${query}」
+
+請仔細閱讀每個品名,找出符合使用者需求的品項。回傳格式:只輸出符合的編號,以逗號分隔,不要任何解釋。例如:0,3,7,12
+
+如果完全沒有符合的,輸出「無」。
+
+品項清單:
+${nameList}`;
+
+  const response = await callClaude(apiKey, prompt, 1500);
+  if (/無/.test(response) && !/\d/.test(response)) return new Set();
+
+  const indices = response.match(/\d+/g) || [];
+  const matched = new Set();
+  indices.forEach(i => {
+    const idx = parseInt(i);
+    if (idx >= 0 && idx < state.result.length) {
+      matched.add(state.result[idx].code);
+    }
+  });
+  return matched;
+}
+
+// 呼叫 Claude API
+async function callClaude(apiKey, prompt, maxTokens) {
+  const headers = new Headers();
+  headers.append('Content-Type', 'application/json');
+  headers.append('x-api-key', apiKey);
+  headers.append('anthropic-version', '2023-06-01');
+  headers.append('anthropic-dangerous-direct-browser-access', 'true');
+
+  const response = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers,
+    body: JSON.stringify({
+      model: 'claude-sonnet-4-20250514',
+      max_tokens: maxTokens,
+      messages: [{ role: 'user', content: prompt }]
+    })
+  });
+
+  if (!response.ok) {
+    const err = await response.text();
+    // 401 清掉錯誤的 key
+    if (response.status === 401) sessionStorage.removeItem('anthropic_api_key');
+    throw new Error('API 回傳 ' + response.status + ': ' + err.slice(0, 200));
+  }
+
+  const data = await response.json();
+  return data.content[0].text;
+}
 
 // ========== 下載 Excel ==========
 function downloadExcel() {
-  if (state.result.length === 0) return;
+  // 如果有過濾,下載過濾後的;沒有就全部
+  const list = (state.activeTags.size > 0 || state.aiFilter ||
+                document.getElementById('searchInput').value.trim())
+    ? state.filtered
+    : state.result;
+
+  if (list.length === 0) return;
 
   const data = [
     ['品號', '品名', '顏色', '尺寸', '官網庫存', '忠孝庫存'],
-    ...state.result.map(r => [r.code, r.name, r.color, r.size, r.webStock, r.cxStock])
+    ...list.map(r => [r.code, r.name, r.color, r.size, r.webStock, r.cxStock])
   ];
-
   const ws = XLSX.utils.aoa_to_sheet(data);
-  // 欄寬
   ws['!cols'] = [
     { wch: 20 }, { wch: 40 }, { wch: 10 }, { wch: 10 }, { wch: 10 }, { wch: 10 }
   ];
-
   const wb = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb, ws, '可調撥清單');
 
   const today = new Date();
-  const dateStr =
-    String(today.getFullYear()).slice(2) +
-    String(today.getMonth() + 1).padStart(2, '0') +
-    String(today.getDate()).padStart(2, '0');
-
+  const dateStr = String(today.getFullYear()).slice(2) +
+                  String(today.getMonth() + 1).padStart(2, '0') +
+                  String(today.getDate()).padStart(2, '0');
   XLSX.writeFile(wb, `${dateStr}_忠孝補貨清單.xlsx`);
 }
 
-// ========== 錯誤處理 ==========
+// ========== 錯誤 / 重置 ==========
 function showError(msg) {
   const box = document.getElementById('errorBox');
   box.textContent = msg;
   box.classList.add('visible');
+  setTimeout(() => box.classList.remove('visible'), 6000);
 }
 function clearError() {
   document.getElementById('errorBox').classList.remove('visible');
 }
 
-// ========== 重置 ==========
 function reset() {
-  state.web = null;
-  state.sl = null;
-  state.cx = null;
-  state.result = [];
+  state.web = null; state.sl = null; state.cx = null;
+  state.result = []; state.filtered = [];
+  state.activeTags.clear();
+  state.aiFilter = null;
   document.querySelectorAll('.upload-card').forEach(c => {
     c.classList.remove('filled');
     c.querySelector('.filename').textContent = '';
     c.querySelector('input[type="file"]').value = '';
   });
+  document.querySelectorAll('.tag-btn').forEach(b =>
+    b.classList.remove('active', 'ai-active')
+  );
   document.getElementById('analyzeBtn').disabled = true;
   document.getElementById('downloadBtn').disabled = true;
   document.getElementById('log').classList.remove('visible');
+  document.getElementById('search-panel').classList.remove('visible');
   document.getElementById('result-wrap').classList.remove('visible');
   document.getElementById('searchInput').value = '';
   clearError();
 }
 
-// ========== 綁定按鈕 ==========
 document.getElementById('analyzeBtn').addEventListener('click', analyze);
 document.getElementById('downloadBtn').addEventListener('click', downloadExcel);
 document.getElementById('resetBtn').addEventListener('click', reset);
