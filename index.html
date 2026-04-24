@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VV DOUBLE · 忠孝補貨判斷工具</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #faf8f5;
+    --card: #ffffff;
+    --ink: #1a1a1a;
+    --muted: #6b6b6b;
+    --line: #e8e4de;
+    --accent: #c8553d;
+    --accent-soft: #f4e4df;
+    --ok: #3d7a5a;
+    --warn: #d4a24a;
+    --shadow: 0 1px 3px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.04);
+  }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.6;
+    min-height: 100vh;
+    padding: 32px 20px 60px;
+  }
+  .container { max-width: 1200px; margin: 0 auto; }
+
+  header {
+    margin-bottom: 32px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--line);
+  }
+  header h1 {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 6px;
+  }
+  header .sub {
+    color: var(--muted);
+    font-size: 14px;
+  }
+  header .tag {
+    display: inline-block;
+    padding: 2px 8px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-right: 6px;
+  }
+
+  .upload-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  @media (max-width: 768px) {
+    .upload-grid { grid-template-columns: 1fr; }
+  }
+
+  .upload-card {
+    background: var(--card);
+    border: 1.5px dashed var(--line);
+    border-radius: 10px;
+    padding: 20px;
+    transition: all 0.2s ease;
+    position: relative;
+    cursor: pointer;
+  }
+  .upload-card:hover {
+    border-color: var(--accent);
+    background: #fffaf8;
+  }
+  .upload-card.filled {
+    border-style: solid;
+    border-color: var(--ok);
+    background: #f5faf7;
+  }
+  .upload-card .label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 6px;
+  }
+  .upload-card .name {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .upload-card .hint {
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .upload-card .filename {
+    font-size: 13px;
+    color: var(--ok);
+    margin-top: 8px;
+    word-break: break-all;
+    font-weight: 500;
+  }
+  .upload-card input[type="file"] {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+  }
+
+  .actions {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 32px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  button {
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 11px 22px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  button.primary {
+    background: var(--ink);
+    color: #fff;
+  }
+  button.primary:hover:not(:disabled) {
+    background: #000;
+    transform: translateY(-1px);
+  }
+  button.primary:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+  }
+  button.secondary {
+    background: var(--accent);
+    color: #fff;
+  }
+  button.secondary:hover:not(:disabled) {
+    background: #b04431;
+  }
+  button.secondary:disabled {
+    background: #ddd;
+    color: #999;
+    cursor: not-allowed;
+  }
+  button.ghost {
+    background: transparent;
+    color: var(--muted);
+    border: 1px solid var(--line);
+  }
+  button.ghost:hover { background: var(--line); }
+
+  .params {
+    margin-left: auto;
+    display: flex;
+    gap: 16px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .params label { display: flex; align-items: center; gap: 6px; }
+  .params input[type="number"] {
+    width: 56px;
+    padding: 4px 8px;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    font-family: inherit;
+    text-align: center;
+  }
+
+  #log {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 18px 22px;
+    margin-bottom: 24px;
+    font-size: 14px;
+    display: none;
+  }
+  #log.visible { display: block; }
+  #log .log-line {
+    padding: 4px 0;
+    border-bottom: 1px dashed var(--line);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  #log .log-line:last-child { border-bottom: none; }
+  #log .log-line .step {
+    color: var(--muted);
+    font-size: 12px;
+  }
+  #log .log-line .count {
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+  #log .log-line.highlight .count { color: var(--accent); }
+
+  #result-wrap {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    display: none;
+  }
+  #result-wrap.visible { display: block; }
+
+  .result-header {
+    padding: 18px 22px;
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .result-header h2 {
+    font-size: 18px;
+    font-weight: 700;
+  }
+  .result-header .total {
+    color: var(--accent);
+    font-weight: 800;
+  }
+  .search-box {
+    flex: 1;
+    max-width: 280px;
+    min-width: 180px;
+  }
+  .search-box input {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 13px;
+    background: var(--bg);
+  }
+
+  .table-wrap {
+    max-height: 600px;
+    overflow: auto;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  thead {
+    background: #f5f2ed;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+  }
+  th, td {
+    padding: 10px 14px;
+    text-align: left;
+    border-bottom: 1px solid var(--line);
+  }
+  th {
+    font-weight: 700;
+    color: var(--muted);
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  td.num {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+    font-weight: 600;
+  }
+  td.num.zero { color: var(--accent); }
+  td.code {
+    font-family: "SF Mono", Monaco, Consolas, monospace;
+    font-size: 12px;
+    color: var(--muted);
+  }
+  tbody tr:hover { background: #fafaf7; }
+
+  .empty {
+    padding: 60px 20px;
+    text-align: center;
+    color: var(--muted);
+  }
+
+  .error-box {
+    background: #fef2f0;
+    border: 1px solid #e5b0a6;
+    color: #933;
+    padding: 14px 18px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    display: none;
+  }
+  .error-box.visible { display: block; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <h1><span class="tag">VV DOUBLE</span>忠孝門市 · 補貨判斷工具</h1>
+    <div class="sub">上傳三份表單,自動產出可調撥清單</div>
+  </header>
+
+  <div class="error-box" id="errorBox"></div>
+
+  <div class="upload-grid">
+    <label class="upload-card" id="card-web">
+      <div class="label">Step 1</div>
+      <div class="name">官網庫存</div>
+      <div class="hint">ERP 總倉庫存表 (.xlsx)</div>
+      <div class="filename"></div>
+      <input type="file" accept=".xlsx,.xls" data-role="web">
+    </label>
+
+    <label class="upload-card" id="card-sl">
+      <div class="label">Step 2</div>
+      <div class="name">SL 已下架品項</div>
+      <div class="hint">官網已下架總表 (.xls / .xlsx)</div>
+      <div class="filename"></div>
+      <input type="file" accept=".xlsx,.xls" data-role="sl">
+    </label>
+
+    <label class="upload-card" id="card-cx">
+      <div class="label">Step 3</div>
+      <div class="name">忠孝庫存</div>
+      <div class="hint">ERP 門市庫存表 (.xlsx)</div>
+      <div class="filename"></div>
+      <input type="file" accept=".xlsx,.xls" data-role="cx">
+    </label>
+  </div>
+
+  <div class="actions">
+    <button class="primary" id="analyzeBtn" disabled>分析補貨清單</button>
+    <button class="secondary" id="downloadBtn" disabled>下載 Excel</button>
+    <button class="ghost" id="resetBtn">重置</button>
+    <div class="params">
+      <label>官網庫存 ≥ <input type="number" id="webMin" value="5" min="0"></label>
+      <label>忠孝缺貨 &lt; <input type="number" id="cxMax" value="2" min="0"></label>
+    </div>
+  </div>
+
+  <div id="log"></div>
+
+  <div id="result-wrap">
+    <div class="result-header">
+      <h2>可調撥清單 · 共 <span class="total" id="totalCount">0</span> 筆</h2>
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="搜尋品號 / 品名 / 顏色...">
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table id="resultTable">
+        <thead>
+          <tr>
+            <th>品號</th>
+            <th>品名</th>
+            <th>顏色</th>
+            <th>尺寸</th>
+            <th style="text-align:right">官網庫存</th>
+            <th style="text-align:right">忠孝庫存</th>
+          </tr>
+        </thead>
+        <tbody id="resultBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ========== 狀態管理 ==========
+const state = {
+  web: null,   // 官網庫存
+  sl: null,    // SL 已下架
+  cx: null,    // 忠孝庫存
+  result: []   // 最終清單
+};
+
+// ========== 檔案上傳處理 ==========
+document.querySelectorAll('input[type="file"]').forEach(input => {
+  input.addEventListener('change', async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const role = e.target.dataset.role;
+    const card = e.target.closest('.upload-card');
+    const filenameEl = card.querySelector('.filename');
+
+    try {
+      const data = await readExcelFile(file);
+      state[role] = data;
+      card.classList.add('filled');
+      filenameEl.textContent = '✓ ' + file.name + ' (' + data.length + ' 筆)';
+      checkReady();
+      clearError();
+    } catch (err) {
+      showError('讀取「' + file.name + '」失敗:' + err.message);
+      console.error(err);
+    }
+  });
+});
+
+function readExcelFile(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      try {
+        const data = new Uint8Array(e.target.result);
+        const wb = XLSX.read(data, { type: 'array' });
+        const sheet = wb.Sheets[wb.SheetNames[0]];
+        const json = XLSX.utils.sheet_to_json(sheet, { defval: '' });
+        resolve(json);
+      } catch (err) {
+        reject(err);
+      }
+    };
+    reader.onerror = () => reject(new Error('FileReader 錯誤'));
+    reader.readAsArrayBuffer(file);
+  });
+}
+
+function checkReady() {
+  const ready = state.web && state.sl && state.cx;
+  document.getElementById('analyzeBtn').disabled = !ready;
+}
+
+// ========== 核心邏輯 ==========
+function analyze() {
+  clearError();
+  const webMin = parseInt(document.getElementById('webMin').value) || 5;
+  const cxMax = parseInt(document.getElementById('cxMax').value) || 2;
+
+  try {
+    // --- 找欄位(容錯:欄位名稱可能有多個空白) ---
+    const webCols = detectCols(state.web[0], {
+      code: ['品號', '品 號', '品    號'],
+      name: ['品名', '品 名', '品    名'],
+      stockIn: ['進貨數量'],
+      balance: ['庫存結餘']
+    });
+    const slCols = detectCols(state.sl[0], {
+      code: ['商品貨號']
+    });
+    const cxCols = detectCols(state.cx[0], {
+      code: ['品號', '品 號', '品    號'],
+      name: ['品名', '品 名', '品    名'],
+      transferIn: ['轉撥入庫'],
+      balance: ['庫存結餘']
+    });
+
+    // --- Step 1: 官網庫存過濾 ---
+    const webFiltered = state.web.filter(row => {
+      const stockIn = toNum(row[webCols.stockIn]);
+      const balance = toNum(row[webCols.balance]);
+      return stockIn === 0 && balance >= webMin;
+    });
+
+    // --- Step 2: 排除 SL 已下架 ---
+    const slCodes = new Set(
+      state.sl
+        .map(r => String(r[slCols.code] || '').trim())
+        .filter(c => c)
+    );
+    const webAfterSL = webFiltered.filter(row => {
+      const code = String(row[webCols.code] || '').trim();
+      return !slCodes.has(code);
+    });
+
+    // --- Step 3: 忠孝實際庫存 map ---
+    const cxStockMap = new Map();
+    state.cx.forEach(row => {
+      const code = String(row[cxCols.code] || '').trim();
+      const actual = toNum(row[cxCols.balance]) - toNum(row[cxCols.transferIn]);
+      if (code) cxStockMap.set(code, actual);
+    });
+
+    // --- Step 4: 判斷需補貨 ---
+    const restockList = webAfterSL.filter(row => {
+      const code = String(row[webCols.code] || '').trim();
+      const cxStock = cxStockMap.has(code) ? cxStockMap.get(code) : 0;
+      return cxStock < cxMax;
+    });
+
+    // --- 拆解品名 ---
+    state.result = restockList.map(row => {
+      const code = String(row[webCols.code] || '').trim();
+      const fullName = String(row[webCols.name] || '').trim();
+      const { name, color, size } = splitName(fullName);
+      return {
+        code,
+        name,
+        color,
+        size,
+        webStock: toNum(row[webCols.balance]),
+        cxStock: cxStockMap.has(code) ? cxStockMap.get(code) : 0
+      };
+    });
+
+    // 排序:忠孝 0 件的優先、再依官網庫存由多到少
+    state.result.sort((a, b) => a.cxStock - b.cxStock || b.webStock - a.webStock);
+
+    // --- 顯示 log ---
+    renderLog([
+      { step: 'Step 1', desc: '官網庫存可出(進貨=0 且 庫存≥' + webMin + ')', count: webFiltered.length },
+      { step: 'Step 2', desc: '排除 SL 已下架', count: webAfterSL.length, sub: '-' + (webFiltered.length - webAfterSL.length) },
+      { step: 'Step 3', desc: '忠孝缺貨(實際庫存 < ' + cxMax + ')判斷', count: '—' },
+      { step: 'Step 4', desc: '最終可調撥清單', count: state.result.length, highlight: true }
+    ]);
+
+    renderTable(state.result);
+    document.getElementById('downloadBtn').disabled = state.result.length === 0;
+    document.getElementById('result-wrap').classList.add('visible');
+
+  } catch (err) {
+    showError('分析失敗:' + err.message);
+    console.error(err);
+  }
+}
+
+// ========== 工具函數 ==========
+function detectCols(sampleRow, spec) {
+  const keys = Object.keys(sampleRow);
+  const result = {};
+  for (const [role, candidates] of Object.entries(spec)) {
+    const found = keys.find(k => {
+      const normalized = k.replace(/\s+/g, '');
+      return candidates.some(c => normalized === c.replace(/\s+/g, ''));
+    });
+    if (!found) {
+      throw new Error('找不到欄位:' + candidates[0] + ' (可能是檔案格式不對)');
+    }
+    result[role] = found;
+  }
+  return result;
+}
+
+function toNum(v) {
+  if (v === null || v === undefined || v === '') return 0;
+  const n = Number(v);
+  return isNaN(n) ? 0 : n;
+}
+
+function splitName(full) {
+  if (!full) return { name: '', color: '', size: '' };
+  const parts = full.trim().split(/\s+/);
+  if (parts.length >= 3) {
+    return {
+      name: parts.slice(0, -2).join(' '),
+      color: parts[parts.length - 2],
+      size: parts[parts.length - 1]
+    };
+  }
+  if (parts.length === 2) {
+    return { name: parts[0], color: parts[1], size: '' };
+  }
+  return { name: full, color: '', size: '' };
+}
+
+// ========== UI 渲染 ==========
+function renderLog(items) {
+  const logEl = document.getElementById('log');
+  logEl.innerHTML = items.map(it => `
+    <div class="log-line ${it.highlight ? 'highlight' : ''}">
+      <div>
+        <span class="step">${it.step}</span> · ${it.desc}
+        ${it.sub ? `<span style="color:#999;font-size:12px"> (${it.sub})</span>` : ''}
+      </div>
+      <div class="count">${it.count}${typeof it.count === 'number' ? ' 筆' : ''}</div>
+    </div>
+  `).join('');
+  logEl.classList.add('visible');
+}
+
+function renderTable(list) {
+  const body = document.getElementById('resultBody');
+  document.getElementById('totalCount').textContent = list.length;
+
+  if (list.length === 0) {
+    body.innerHTML = '<tr><td colspan="6" class="empty">沒有符合條件的品項</td></tr>';
+    return;
+  }
+
+  body.innerHTML = list.map(r => `
+    <tr>
+      <td class="code">${escapeHtml(r.code)}</td>
+      <td>${escapeHtml(r.name)}</td>
+      <td>${escapeHtml(r.color)}</td>
+      <td>${escapeHtml(r.size)}</td>
+      <td class="num">${r.webStock}</td>
+      <td class="num ${r.cxStock === 0 ? 'zero' : ''}">${r.cxStock}</td>
+    </tr>
+  `).join('');
+}
+
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, c => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+  }[c]));
+}
+
+// ========== 搜尋 ==========
+document.getElementById('searchInput').addEventListener('input', (e) => {
+  const q = e.target.value.trim().toLowerCase();
+  if (!q) {
+    renderTable(state.result);
+    return;
+  }
+  const filtered = state.result.filter(r =>
+    r.code.toLowerCase().includes(q) ||
+    r.name.toLowerCase().includes(q) ||
+    r.color.toLowerCase().includes(q) ||
+    r.size.toLowerCase().includes(q)
+  );
+  renderTable(filtered);
+});
+
+// ========== 下載 Excel ==========
+function downloadExcel() {
+  if (state.result.length === 0) return;
+
+  const data = [
+    ['品號', '品名', '顏色', '尺寸', '官網庫存', '忠孝庫存'],
+    ...state.result.map(r => [r.code, r.name, r.color, r.size, r.webStock, r.cxStock])
+  ];
+
+  const ws = XLSX.utils.aoa_to_sheet(data);
+  // 欄寬
+  ws['!cols'] = [
+    { wch: 20 }, { wch: 40 }, { wch: 10 }, { wch: 10 }, { wch: 10 }, { wch: 10 }
+  ];
+
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, '可調撥清單');
+
+  const today = new Date();
+  const dateStr =
+    String(today.getFullYear()).slice(2) +
+    String(today.getMonth() + 1).padStart(2, '0') +
+    String(today.getDate()).padStart(2, '0');
+
+  XLSX.writeFile(wb, `${dateStr}_忠孝補貨清單.xlsx`);
+}
+
+// ========== 錯誤處理 ==========
+function showError(msg) {
+  const box = document.getElementById('errorBox');
+  box.textContent = msg;
+  box.classList.add('visible');
+}
+function clearError() {
+  document.getElementById('errorBox').classList.remove('visible');
+}
+
+// ========== 重置 ==========
+function reset() {
+  state.web = null;
+  state.sl = null;
+  state.cx = null;
+  state.result = [];
+  document.querySelectorAll('.upload-card').forEach(c => {
+    c.classList.remove('filled');
+    c.querySelector('.filename').textContent = '';
+    c.querySelector('input[type="file"]').value = '';
+  });
+  document.getElementById('analyzeBtn').disabled = true;
+  document.getElementById('downloadBtn').disabled = true;
+  document.getElementById('log').classList.remove('visible');
+  document.getElementById('result-wrap').classList.remove('visible');
+  document.getElementById('searchInput').value = '';
+  clearError();
+}
+
+// ========== 綁定按鈕 ==========
+document.getElementById('analyzeBtn').addEventListener('click', analyze);
+document.getElementById('downloadBtn').addEventListener('click', downloadExcel);
+document.getElementById('resetBtn').addEventListener('click', reset);
+</script>
+</body>
+</html>
